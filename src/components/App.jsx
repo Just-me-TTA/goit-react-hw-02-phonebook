@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
@@ -22,14 +22,17 @@ export class App extends Component {
       contact =>
         contact.name.toLowerCase() === newContact.name.toLowerCase().trim()
     );
-    const contactObj = {
-      ...newContact,
-      id: nanoid(),
-    };
+
     if (isExist) {
       alert(`${newContact.name} is already in contacts`);
       return;
     }
+
+    const contactObj = {
+      ...newContact,
+      id: nanoid(),
+    };
+
     this.setState(prev => ({
       contacts: [...prev.contacts, contactObj],
     }));
@@ -55,6 +58,8 @@ export class App extends Component {
   };
 
   render() {
+    const option = 'allcontacts';
+
     return (
       <Wrapper>
         <GlobalStyle />
@@ -65,6 +70,7 @@ export class App extends Component {
         <ContactList
           contacts={this.filterContactsByName()}
           deleteContact={this.deleteContact}
+          option={option}
         />
       </Wrapper>
     );
